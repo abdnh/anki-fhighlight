@@ -1,0 +1,7 @@
+.vscode/
+venv/
+ankiprofile/
+*.zip
+*.ankiaddon
+*.tgz
+src/vendor/*
