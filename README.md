@@ -27,3 +27,13 @@ You can also use the following filter to list all supported languages:
 ```
 {{highlight-list-lexers:}}
 ```
+
+
+## Building
+
+The Pygments library is not included in this repo. You can [download it manually](https://github.com/pygments/pygments/releases/) and copy it to the src/vendor/pygments directory. Alternatively, running the included Makefile will download Pygments, package the source files, and produce an .ankiaddon file.
+
+
+## AnkiWeb
+
+TODO: publish on AnkiWeb.
