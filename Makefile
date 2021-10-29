@@ -8,7 +8,7 @@ build.zip: src/* pygments.tgz
 	rm -f $@
 	rm -f src/meta.json
 	rm -rf src/__pycache__
-	( cd src/vendor; mkdir pygments; cd pygments; tar xf ../../../pygments.tgz --strip-components=1 pygments-2.10.0 )
+	( mkdir src/vendor; cd src/vendor; mkdir pygments; cd pygments; tar xf ../../../pygments.tgz --strip-components=1 pygments-2.10.0 )
 	( cd src/; zip -r ../$@ * )
 	cp build.zip fhighlight.ankiaddon
 
