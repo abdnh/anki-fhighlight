@@ -1,6 +1,7 @@
 .vscode/
 venv/
 ankiprofile/
+*.pyc
 *.zip
 *.ankiaddon
 *.tgz
