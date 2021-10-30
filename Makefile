@@ -8,7 +8,7 @@ fhighlight.ankiaddon: src/* pygments.tgz
 	rm -f $@
 	rm -f src/meta.json
 	rm -rf src/__pycache__
-	( mkdir src/vendor; cd src/vendor; mkdir pygments; cd pygments; tar xf ../../../pygments.tgz --strip-components=1 pygments-2.10.0 )
+	( mkdir src/vendor; cd src/vendor; tar xf ../../pygments.tgz --strip-components=1 pygments-2.10.0/pygments )
 	( cd src/; zip -r ../$@ * )
 
 pygments.tgz:
