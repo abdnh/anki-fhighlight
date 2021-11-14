@@ -1,7 +1,7 @@
 import sys
 import os
 import re
-
+import html
 
 from anki import hooks
 
@@ -21,7 +21,9 @@ formatter = HtmlFormatter(noclasses=True, linenos=True)
 
 cloze_re = re.compile("<span class=cloze>(.*)</span>")
 
+
 def preprocess_field_text(field_text: str) -> str:
+    field_text = html.unescape(field_text)
     field_text = cloze_re.sub(r"\1", field_text)
     field_text = field_text.replace("<br>", "\n")
     field_text = field_text.replace("&nbsp;", " ")
