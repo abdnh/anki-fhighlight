@@ -24,10 +24,10 @@ html_re = re.compile("(<.*?>)")
 
 
 def preprocess_field_text(field_text: str) -> str:
+    field_text = field_text.replace("<br>", "\n")
     field_text = html_re.sub("", field_text)
     field_text = html.unescape(field_text)
     field_text = cloze_re.sub(r"\1", field_text)
-    field_text = field_text.replace("<br>", "\n")
     field_text = field_text.replace("&nbsp;", " ")
     return field_text
 
