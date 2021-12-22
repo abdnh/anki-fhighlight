@@ -1,4 +1,4 @@
-.PHONY: all clean zip
+.PHONY: all clean zip install
 
 all: zip
 
@@ -13,6 +13,10 @@ fhighlight.ankiaddon: src/* pygments.tgz
 
 pygments.tgz:
 	curl -L -o pygments.tgz https://github.com/pygments/pygments/archive/refs/tags/2.10.0.tar.gz
+
+# install in test profile
+install: zip
+	unzip -o fhighlight.ankiaddon -d ankiprofile/addons21/fhighlight
 
 clean:
 	rm -f *.pyc
