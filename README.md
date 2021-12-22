@@ -1,3 +1,5 @@
+# Anki FHighlight
+
 An [Anki](https://apps.ankiweb.net/) add-on that adds syntax highlighting for code via a custom filter which you put in your [card templates](https://docs.ankiweb.net/templates/intro.html).
 
 This uses the [Pygments](https://pygments.org/) library like [glutanimate](https://github.com/glutanimate/)'s *[Syntax Highlighting for Code](https://ankiweb.net/shared/info/1463041493)* add-on. The main difference is that this add-on highlights code dynamically when it's shown in the reviewing screen,
@@ -28,6 +30,13 @@ You can also use the following filter to list all supported languages:
 {{highlight-list-lexers:}}
 ```
 
+There is also a more flexible option for highlighting code snippets in fields without having to modify your templates.
+Enclose code snippets in the the special marker `#highlight` like so:
+```
+#highlight:python
+print('hello world!')
+#highlight
+```
 
 ## Building
 
