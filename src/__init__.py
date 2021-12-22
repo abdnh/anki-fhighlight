@@ -20,9 +20,11 @@ from pygments.formatters import HtmlFormatter
 formatter = HtmlFormatter(noclasses=True, linenos=True)
 
 cloze_re = re.compile("<span class=cloze>(.*)</span>")
+html_re = re.compile("(<.*?>)")
 
 
 def preprocess_field_text(field_text: str) -> str:
+    field_text = html_re.sub("", field_text)
     field_text = html.unescape(field_text)
     field_text = cloze_re.sub(r"\1", field_text)
     field_text = field_text.replace("<br>", "\n")
