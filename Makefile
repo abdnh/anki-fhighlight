@@ -4,7 +4,7 @@ all: zip
 
 zip: fhighlight.ankiaddon
 
-fhighlight.ankiaddon: src/* pygments.tgz
+fhighlight.ankiaddon: $(shell find src -type f ) pygments.tgz
 	rm -f $@
 	rm -f src/meta.json
 	rm -rf src/__pycache__
