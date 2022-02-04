@@ -106,3 +106,7 @@ def highlight_blocks(text: str):
         return highlight_text(text, lexer)
 
     return highlight_in_field_re.sub(highligh_block, text)
+
+
+def fhighlight_get_all_lexers():
+    return get_all_lexers()

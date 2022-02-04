@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="26"
+   height="26"
+   viewBox="0 0 26 26"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="icon.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview19851"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="true"
+     inkscape:zoom="23.147924"
+     inkscape:cx="11.944916"
+     inkscape:cy="11.037707"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     width="26px">
+    <inkscape:grid
+       type="xygrid"
+       id="grid19914" />
+  </sodipodi:namedview>
+  <defs
+     id="defs19846" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g19827"
+       transform="matrix(0.78931001,0,0,0.71286998,0.37103985,1.5940803)">
+      <text
+         xml:space="preserve"
+         style="font-size:26.6667px;line-height:1;font-family:Arial;-inkscape-font-specification:Arial;font-variant-ligatures:none;stroke-width:1.54198"
+         x="-0.64177376"
+         y="24.470337"
+         id="text7825"
+         transform="scale(0.93287837,1.0719511)"><tspan
+           sodipodi:role="line"
+           id="tspan7823"
+           x="-0.64177376"
+           y="24.470337"
+           style="font-size:26.6667px;stroke-width:1.54198"><tspan
+             style="font-size:26.6667px;fill:#ff0000;stroke-width:1.54198"
+             id="tspan12273">F</tspan><tspan
+             style="font-size:26.6667px;fill:#00ff00;stroke-width:1.54198"
+             id="tspan14075">H</tspan></tspan></text>
+    </g>
+  </g>
+</svg>
