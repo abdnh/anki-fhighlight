@@ -41,6 +41,7 @@ if "unittest" not in sys.modules:
 
         def on_button(editor: Editor):
             dialog = QDialog(editor.widget)
+            dialog.setWindowTitle("FHighlight")
             label = QLabel("Language:")
             combo = QComboBox(dialog)
             def_lang = config.get("def_lang", "python")
