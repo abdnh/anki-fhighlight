@@ -3,9 +3,8 @@
 An [Anki](https://apps.ankiweb.net/) add-on that adds syntax highlighting for code via a custom filter which you put in your [card templates](https://docs.ankiweb.net/templates/intro.html).
 
 This uses the [Pygments](https://pygments.org/) library like [glutanimate](https://github.com/glutanimate/)'s *[Syntax Highlighting for Code](https://ankiweb.net/shared/info/1463041493)* add-on. The main difference is that this add-on highlights code dynamically when it's shown in the reviewing screen,
-and doesn't modify the notes themselves. This mainly has the advantage of keeping your collection size on check
-if you have a lot of code notes, but it has the disadvantage that syntax highlighting will not work without the add-on
-(i.e. it won't work on mobile platforms).
+and doesn't modify the notes themselves. This has the disadvantage that syntax highlighting will not work without the add-on
+(i.e. it won't work on mobile platforms). I wrote this just because I want to keep my collection a bit smaller.
 
 ## How to use
 
@@ -42,7 +41,3 @@ print('hello world!')
 
 The Pygments library is not included in this repo. You can [download it manually](https://github.com/pygments/pygments/releases/) and copy it to the src/vendor/pygments directory. Alternatively, running the included Makefile will download Pygments, package the source files, and produce an .ankiaddon file.
 
-
-## AnkiWeb
-
-TODO: publish on AnkiWeb.
