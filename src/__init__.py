@@ -24,7 +24,7 @@ if "unittest" not in sys.modules:
         fhighlight_get_all_lexers,
     )
 
-    def on_highligth_filter(
+    def on_highlight_filter(
         field_text: str,
         field_name: str,
         filter_name: str,
@@ -89,6 +89,6 @@ if "unittest" not in sys.modules:
         )
         buttons.append(button)
 
-    hooks.field_filter.append(on_highligth_filter)
+    hooks.field_filter.append(on_highlight_filter)
     gui_hooks.card_will_show.append(on_card_will_show)
     gui_hooks.editor_did_init_buttons.append(add_editor_button)
