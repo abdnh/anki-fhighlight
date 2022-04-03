@@ -2,7 +2,12 @@ from typing import Dict
 from unittest import TestCase
 import unittest
 
-from src.fhighlight import highlight_field, highlight_blocks, highlight_filter
+from src.fhighlight import (
+    highlight_field,
+    highlight_blocks,
+    highlight_filter,
+    preprocess_field_text,
+)
 
 
 class MockTemplateRenderContext:
@@ -100,6 +105,12 @@ class TestHighlightFilter(TestCase):
         highlighted = highlight_blocks(text)
         # Not specifying a language name will result in no highlighting
         self.assertEqual(text, highlighted)
+
+    def test_text_cleaning(self) -> None:
+        text = """<br><div>print("hello world!")</div>"""
+        cleaned = preprocess_field_text(text)
+        expected = """\nprint("hello world!")\n"""
+        self.assertEqual(cleaned, expected)
 
 
 if __name__ == "__main__":
