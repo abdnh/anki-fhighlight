@@ -57,12 +57,14 @@ if "unittest" not in sys.modules:
             ok_button.setAutoDefault(True)
 
             def accept():
-                editor.web.eval(
-                    f"wrap('#highlight:{combo.currentData()}<br>', '<br>#highlight')"
-                )
-                config["def_lang"] = combo.currentText()
-                mw.addonManager.writeConfig(__name__, config)
+                lang = combo.currentText()
+                lang_alias = combo.currentData()
                 dialog.close()
+                editor.web.eval(
+                    f"setTimeout(() => wrap('#highlight:{lang_alias}<br>', '<br>#highlight'))"
+                )
+                config["def_lang"] = lang
+                mw.addonManager.writeConfig(__name__, config)
 
             qconnect(ok_button.clicked, accept)
             cancel_button = QPushButton()
