@@ -86,17 +86,12 @@ def highlight_filter(
     return filtered
 
 
-highlight_in_field_re = re.compile("#highlight:([^<\s]+)(.*?)#highlight", re.DOTALL)
+highlight_in_field_re = re.compile("```([^<\s]+)(.*?)```", re.DOTALL)
 
 
 def highlight_blocks(text: str):
     """
-    Process code blocks in fields delimited by `#highlight`. E.g:
-    ```
-      #highlight:python
-      print("hello world!")
-      #highlight
-    ```
+    Process code blocks in fields delimited by triple backticks.
     """
 
     def highligh_block(m: Match):

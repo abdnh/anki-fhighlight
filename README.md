@@ -30,12 +30,19 @@ You can also use the following filter to list all supported languages:
 ```
 
 There is also a more flexible option for highlighting code snippets in fields without having to modify your templates.
-Enclose code snippets in the the special marker `#highlight` like so:
-```
-#highlight:python
+Enclose code snippets in the triple backticks like this:
+<pre>
+```python
 print('hello world!')
-#highlight
 ```
+</pre>
+
+**NOTE**: The add-on used to use a custom delimiter (`#highlight`). You can use the Find and Replace feature with the following regexes to update your notes for the new syntax:
+
+- Find: `(?s)#highlight:(.*?)<br>(.*?)#highlight`
+- Replace With: <code>\`\`\`${1}&lt;br&gt;${2}\`\`\`</code>
+- Make sure the "Treat input as regular expression" option is checked.
+
 
 ## Building
 

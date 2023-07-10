@@ -79,18 +79,18 @@ class TestHighlightFilter(TestCase):
 
     def test_highlight_blocks(self) -> None:
         text = """
-            #highlight:python
+            ```python
             print("hello world!")
-            #highlight
+            ```
         """
         highlighted = highlight_blocks(text)
         self.assertNotEqual(text, highlighted)
 
     def test_highlight_blocks_with_invalid_lang(self) -> None:
         text = """
-            #highlight:zxzxzxzxzx
+            ```zxzxzxzxzx
             print("hello world!")
-            #highlight
+            ```
         """
         highlighted = highlight_blocks(text)
         # An invalid language name result in the add-on guessing the text language using guess_lexer()
@@ -98,9 +98,9 @@ class TestHighlightFilter(TestCase):
 
     def test_highlight_blocks_with_empty_lang(self) -> None:
         text = """
-            #highlight:
+            ```
             print("hello world!")
-            #highlight
+            ```
         """
         highlighted = highlight_blocks(text)
         # Not specifying a language name will result in no highlighting
