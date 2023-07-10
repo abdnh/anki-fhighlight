@@ -6,3 +6,4 @@ ankidata/
 *.ankiaddon
 *.tgz
 src/vendor/*
+TODO.md
