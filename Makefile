@@ -15,13 +15,6 @@ fhighlight.ankiaddon: $(shell find src -type f ) src/vendor/pygments
 	rm -rf src/__pycache__
 	( cd src/; zip -r ../$@ * )
 
-# install in test profile
-install: ankiprofile/addons21/fhighlight
-
-ankiprofile/addons21/fhighlight: $(shell find src -type f ) src/vendor/pygments
-	rm -rf src/__pycache__
-	cp -r src/. ankiprofile/addons21/fhighlight
-
 clean:
 	rm -f *.pyc
 	rm -f src/*.pyc
