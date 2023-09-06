@@ -1,24 +1,23 @@
-import sys
-import os
-import re
 import html
-from typing import Dict, Match
+import re
+from typing import TYPE_CHECKING, Dict, Iterator, Match, Sequence, Tuple
 
+if TYPE_CHECKING:
+    from anki.notes import Note
 
-# FIXME: how to avoid conflicts with other add-ons that also inject the same modules?
-addon_dir = os.path.dirname(__file__)
-sys.path.insert(0, os.path.join(addon_dir, "vendor"))
-
-from pygments.lexer import Lexer
 from pygments import highlight
-from pygments.lexers import get_lexer_by_name, get_all_lexers, guess_lexer
-from pygments.formatters import HtmlFormatter
-
+from pygments.formatters.html import HtmlFormatter
+from pygments.lexer import Lexer
+from pygments.lexers import get_all_lexers, get_lexer_by_name, guess_lexer
 
 formatter = HtmlFormatter(noclasses=True, linenos=True)
 
 cloze_re = re.compile("<span class=cloze>(.*)</span>")
 html_re = re.compile("(<.*?>)")
+
+
+class FhighlightException(Exception):
+    pass
 
 
 def preprocess_field_text(field_text: str) -> str:
@@ -31,7 +30,7 @@ def preprocess_field_text(field_text: str) -> str:
     return field_text
 
 
-def highlight_text(text, lexer: Lexer) -> str:
+def highlight_text(text: str, lexer: Lexer) -> str:
     return "<center>" + highlight(text, lexer, formatter) + "</center><br>"
 
 
@@ -43,20 +42,18 @@ def fhighlight_get_lexer(lang: str, text: str) -> Lexer:
     return lexer
 
 
-def highlight_field(
-    context: "TemplateRenderContext", field_text: str, options: Dict[str, str]
-) -> str:
+def highlight_field(note: "Note", field_text: str, options: Dict[str, str]) -> str:
     field_text = preprocess_field_text(field_text)
     if lang := options.get("lang", None):
         if lang.startswith("#"):
             # treat as field reference
             try:
                 field = lang[1:]
-                lang = context.note()[field].strip()
-            except KeyError:
-                raise Exception(
+                lang = note[field].strip()
+            except KeyError as exc:
+                raise FhighlightException(
                     f"Field '{field}' used in the highlight filter does not exist"
-                )
+                ) from exc
         lexer = fhighlight_get_lexer(lang, field_text)
     else:
         lexer = guess_lexer(field_text, stripall=True)
@@ -65,12 +62,11 @@ def highlight_field(
 
 
 def highlight_filter(
+    note: "Note",
     field_text: str,
     field_name: str,
     filter_name: str,
-    context: "TemplateRenderContext",
 ) -> str:
-
     filtered = field_text
     if filter_name.startswith("highlight"):
         if filter_name.startswith("highlight-list-lexers"):
@@ -81,20 +77,20 @@ def highlight_filter(
             options = {}
             for opt in map(lambda p: p.split("="), filter_name.split()[1:]):
                 options[opt[0]] = opt[1]
-            filtered = highlight_field(context, filtered, options)
+            filtered = highlight_field(note, filtered, options)
 
     return filtered
 
 
-highlight_in_field_re = re.compile("```([^<\s]+)(.*?)```", re.DOTALL)
+highlight_in_field_re = re.compile(r"```([^<\s]+)(.*?)```", re.DOTALL)
 
 
-def highlight_blocks(text: str):
+def highlight_blocks(text: str) -> str:
     """
     Process code blocks in fields delimited by triple backticks.
     """
 
-    def highligh_block(m: Match):
+    def highligh_block(m: Match) -> str:
         lang = m.group(1)
         text = m.group(2)
         text = preprocess_field_text(text)
@@ -104,5 +100,7 @@ def highlight_blocks(text: str):
     return highlight_in_field_re.sub(highligh_block, text)
 
 
-def fhighlight_get_all_lexers():
+def fhighlight_get_all_lexers() -> (
+    Iterator[Tuple[str, Sequence[str], Sequence[str], Sequence[str]]]
+):
     return get_all_lexers()

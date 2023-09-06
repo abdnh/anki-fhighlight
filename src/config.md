@@ -1,0 +1,2 @@
+-   `def_lang`: Default language to select in language chooser.
+-   `shortcut`: Editor shortcut.

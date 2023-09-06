@@ -1,22 +1,28 @@
-.PHONY: all clean zip install
+.PHONY: all zip ankiweb vendor fix mypy pylint test clean
 
-all: zip
+all: zip ankiweb
 
-zip: fhighlight.ankiaddon
+zip:
+	python -m ankiscripts.build --type package --qt all --exclude user_files/**/
 
-pygments.tgz:
-	curl -L -o pygments.tgz https://github.com/pygments/pygments/archive/refs/tags/2.10.0.tar.gz
+ankiweb:
+	python -m ankiscripts.build --type ankiweb --qt all --exclude user_files/**/
 
-src/vendor/pygments:
-	( mkdir -p src/vendor; cd src/vendor; tar xf ../../pygments.tgz --strip-components=1 pygments-2.10.0/pygments )
+vendor:
+	python -m ankiscripts.vendor
 
-fhighlight.ankiaddon: $(shell find src -type f ) src/vendor/pygments
-	rm -f $@
-	rm -rf src/__pycache__
-	( cd src/; zip -r ../$@ * )
+fix:
+	python -m black src tests --exclude="forms|vendor"
+	python -m isort src tests
+
+mypy:
+	python -m mypy src tests
+
+pylint:
+	python -m pylint src tests
+
+test:
+	python -m  pytest --cov=src --cov-config=.coveragerc
 
 clean:
-	rm -f *.pyc
-	rm -f src/*.pyc
-	rm -f src/__pycache__
-	rm -f fhighlight.ankiaddon
+	rm -rf build/

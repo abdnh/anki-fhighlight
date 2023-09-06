@@ -1,0 +1,7 @@
+{
+    "conflicts": ["1463041493"],
+    "homepage": "https://github.com/abdnh/anki-fhighlight",
+    "min_point_version": 45,
+    "name": "FHighlight - Dynamic Code Highlighting",
+    "package": "fhighlight"
+}

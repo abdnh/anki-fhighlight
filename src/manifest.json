@@ -1,6 +1,0 @@
-{
-    "name": "FHighlight - Syntax Highlighting",
-    "package": "fhighlight",
-    "homepage": "https://github.com/abdnh/anki-fhighlight",
-    "conflicts": ["1463041493"]
-}

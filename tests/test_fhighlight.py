@@ -1,117 +1,137 @@
-from typing import Dict
-from unittest import TestCase
-import unittest
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Dict, cast
+
+import pytest
+
+if TYPE_CHECKING:
+    from anki.notes import Note
 
 from src.fhighlight import (
-    highlight_field,
+    FhighlightException,
     highlight_blocks,
+    highlight_field,
     highlight_filter,
     preprocess_field_text,
 )
 
 
-class MockTemplateRenderContext:
-    def __init__(self, fields: Dict[str, str]):
-        self.fields = fields
+@dataclass
+class MockNote:
+    fields: Dict[str, str]
 
-    def note(self) -> Dict[str, str]:
-        return self.fields
+    def __getitem__(self, name: str) -> str:
+        return self.fields[name]
 
-
-class TestHighlightFilter(TestCase):
-    def setUp(self) -> None:
-        self.context = MockTemplateRenderContext(
-            {"Front": "", "Back": "", "Language": "python"}
-        )
-
-    def test_filter(self) -> None:
-        text = 'print("hello")'
-        highlighted1 = highlight_filter(text, "", "highlight lang=python", self.context)
-        highlighted2 = highlight_field(self.context, text, {"lang": "python"})
-        self.assertNotEqual(text, highlighted1)
-        self.assertEqual(highlighted1, highlighted2)
-
-    def test_filter_with_no_lang(self) -> None:
-        text = 'print("hello")'
-        highlighted = highlight_filter(text, "", "highlight", self.context)
-        self.assertNotEqual(text, highlighted)
-
-    def test_filter_with_invalid_lang(self) -> None:
-        text = 'print("hello")'
-        highlighted = highlight_filter(
-            text, "", "highlight lang=zxzxzxzxzx", self.context
-        )
-        self.assertNotEqual(text, highlighted)
-
-    def test_filter_with_lang_field(self) -> None:
-        text = 'print("hello")'
-        highlighted1 = highlight_filter(
-            text, "", "highlight lang=#Language", self.context
-        )
-        highlighted2 = highlight_field(self.context, text, {"lang": "#Language"})
-        self.assertNotEqual(text, highlighted1)
-        self.assertEqual(highlighted1, highlighted2)
-
-    def test_filter_with_invalid_lang_field_name(self) -> None:
-        text = 'print("hello")'
-        with self.assertRaises(Exception):
-            highlight_filter(text, "", "highlight lang=#foo", self.context)
-
-    def test_filter_with_empty_lang_field(self) -> None:
-        self.context.fields["Language"] = ""
-        text = 'print("hello")'
-        highlighted1 = highlight_filter(
-            text, "", "highlight lang=#Language", self.context
-        )
-        highlighted2 = highlight_field(self.context, text, {"lang": "#Language"})
-        self.assertNotEqual(text, highlighted1)
-        self.assertEqual(highlighted1, highlighted2)
-
-    def test_filter_with_invalid_lang_field(self) -> None:
-        self.context.fields["Language"] = "zxzxzxzxzx"
-        text = 'print("hello")'
-        highlighted1 = highlight_filter(
-            text, "", "highlight lang=#Language", self.context
-        )
-        highlighted2 = highlight_field(self.context, text, {"lang": "#Language"})
-        self.assertNotEqual(text, highlighted1)
-        self.assertEqual(highlighted1, highlighted2)
-
-    def test_highlight_blocks(self) -> None:
-        text = """
-            ```python
-            print("hello world!")
-            ```
-        """
-        highlighted = highlight_blocks(text)
-        self.assertNotEqual(text, highlighted)
-
-    def test_highlight_blocks_with_invalid_lang(self) -> None:
-        text = """
-            ```zxzxzxzxzx
-            print("hello world!")
-            ```
-        """
-        highlighted = highlight_blocks(text)
-        # An invalid language name result in the add-on guessing the text language using guess_lexer()
-        self.assertNotEqual(text, highlighted)
-
-    def test_highlight_blocks_with_empty_lang(self) -> None:
-        text = """
-            ```
-            print("hello world!")
-            ```
-        """
-        highlighted = highlight_blocks(text)
-        # Not specifying a language name will result in no highlighting
-        self.assertEqual(text, highlighted)
-
-    def test_text_cleaning(self) -> None:
-        text = """<br><div>print("hello world!")</div>"""
-        cleaned = preprocess_field_text(text)
-        expected = """\nprint("hello world!")\n"""
-        self.assertEqual(cleaned, expected)
+    def __setitem__(self, name: str, value: str) -> None:
+        self.fields[name] = value
 
 
-if __name__ == "__main__":
-    unittest.main()
+@pytest.fixture
+def note() -> "Note":
+    return cast(
+        "Note",
+        MockNote({"Front": "", "Back": "", "Language": "python"}),
+    )
+
+
+def test_basic_filter(note: "Note") -> None:
+    text = 'print("hello")'
+    highlighted1 = highlight_filter(note, text, "", "highlight lang=python")
+    highlighted2 = highlight_field(note, text, {"lang": "python"})
+    assert text != highlighted1
+    assert highlighted1 == highlighted2
+
+
+def test_filter_with_no_lang(note: "Note") -> None:
+    text = 'print("hello")'
+    highlighted = highlight_filter(note, text, "", "highlight")
+    assert text != highlighted
+
+
+def test_filter_with_invalid_lang(note: "Note") -> None:
+    text = 'print("hello")'
+    highlighted = highlight_filter(note, text, "", "highlight lang=zxzxzxzxzx")
+    assert text != highlighted
+
+
+def test_filter_with_lang_field(note: "Note") -> None:
+    text = 'print("hello")'
+    highlighted1 = highlight_filter(
+        note,
+        text,
+        "",
+        "highlight lang=#Language",
+    )
+    highlighted2 = highlight_field(note, text, {"lang": "#Language"})
+    assert text != highlighted1
+    assert highlighted1 == highlighted2
+
+
+def test_filter_with_invalid_lang_field_name(
+    note: "Note",
+) -> None:
+    text = 'print("hello")'
+    with pytest.raises(FhighlightException):
+        highlight_filter(note, text, "", "highlight lang=#foo")
+
+
+def test_filter_with_empty_lang_field(note: "Note") -> None:
+    note["Language"] = ""
+    text = 'print("hello")'
+    highlighted1 = highlight_filter(note, text, "", "highlight lang=#Language")
+    highlighted2 = highlight_field(note, text, {"lang": "#Language"})
+    assert text != highlighted1
+    assert highlighted1 == highlighted2
+
+
+def test_filter_with_invalid_lang_field(note: "Note") -> None:
+    note["Language"] = "zxzxzxzxzx"
+    text = 'print("hello")'
+    highlighted1 = highlight_filter(
+        note,
+        text,
+        "",
+        "highlight lang=#Language",
+    )
+    highlighted2 = highlight_field(note, text, {"lang": "#Language"})
+    assert text != highlighted1
+    assert highlighted1 == highlighted2
+
+
+def test_highlight_blocks() -> None:
+    text = """
+        ```python
+        print("hello world!")
+        ```
+    """
+    highlighted = highlight_blocks(text)
+    assert text != highlighted
+
+
+def test_highlight_blocks_with_invalid_lang() -> None:
+    text = """
+        ```zxzxzxzxzx
+        print("hello world!")
+        ```
+    """
+    highlighted = highlight_blocks(text)
+    # An invalid language name results in the add-on guessing the text language using guess_lexer()
+    assert text != highlighted
+
+
+def test_highlight_blocks_with_empty_lang() -> None:
+    text = """
+        ```
+        print("hello world!")
+        ```
+    """
+    highlighted = highlight_blocks(text)
+    # Not specifying a language name will result in no highlighting
+    assert text == highlighted
+
+
+def test_text_cleaning() -> None:
+    text = """<br><div>print("hello world!")</div>"""
+    cleaned = preprocess_field_text(text)
+    expected = """\nprint("hello world!")\n"""
+    assert cleaned == expected
