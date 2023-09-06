@@ -61,7 +61,7 @@ if "unittest" not in sys.modules:
                 lang_alias = combo.currentData()
                 dialog.close()
                 editor.web.eval(
-                    f"setTimeout(() => wrap('```{lang_alias}<br>', '<br>```'))"
+                    f"setTimeout(() => wrap('```{lang_alias}<br>', '<br>```'), 10)"
                 )
                 config["def_lang"] = lang
                 mw.addonManager.writeConfig(__name__, config)
