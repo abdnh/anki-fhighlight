@@ -82,7 +82,7 @@ def highlight_filter(
     return filtered
 
 
-highlight_in_field_re = re.compile(r"```([^<\s]+)(.*?)```", re.DOTALL)
+highlight_in_field_re = re.compile(r"```([^<\s]*)(.*?)```", re.DOTALL)
 
 
 def highlight_blocks(text: str) -> str:

@@ -109,25 +109,25 @@ def test_highlight_blocks() -> None:
 
 
 def test_highlight_blocks_with_invalid_lang() -> None:
+    # An invalid language name results in the add-on guessing the language using guess_lexer()
     text = """
         ```zxzxzxzxzx
         print("hello world!")
         ```
     """
     highlighted = highlight_blocks(text)
-    # An invalid language name results in the add-on guessing the text language using guess_lexer()
     assert text != highlighted
 
 
 def test_highlight_blocks_with_empty_lang() -> None:
+    # An empty language name results in the add-on guessing the language using guess_lexer()
     text = """
         ```
         print("hello world!")
         ```
     """
     highlighted = highlight_blocks(text)
-    # Not specifying a language name will result in no highlighting
-    assert text == highlighted
+    assert text != highlighted
 
 
 def test_text_cleaning() -> None:
