@@ -13,8 +13,7 @@ Put the add-on's filter in your card template like this:
 {{highlight lang=python:Front}}
 ```
 
-The `lang` option specifies the programming language you want to highlight its code.
-See [Pygments documentation](https://pygments.org/docs/lexers/) for a list of all supported languages.
+The `lang` option specifies the programming language. See [Pygments documentation](https://pygments.org/docs/lexers/) for a list of all supported languages.
 You can alternatively omit the option to make the add-on try to guess the language from the field text using Pygments' [guess_lexer](https://pygments.org/docs/api/#pygments.lexers.guess_lexer) function.
 
 You can also dynamically specify the language for each note by prefixing the value of the lang option with `#`:
@@ -40,11 +39,7 @@ print('hello world!')
 ```
 </pre>
 
-**NOTE**: The add-on used to use a custom delimiter (`#highlight`). You can use the Find and Replace feature with the following regexes to update your notes for the new syntax:
-
--   Find: `(?s)#highlight:(.*?)<br>(.*?)#highlight`
--   Replace With: <code>\`\`\`${1}&lt;br&gt;${2}\`\`\`</code>
--   Make sure the "Treat input as regular expression" option is checked.
+You can also omit the language here.
 
 ## Changelog
 
