@@ -41,6 +41,10 @@ print('hello world!')
 
 You can also omit the language here.
 
+## Download
+
+You can download the add-on from AnkiWeb: [1339779080](https://ankiweb.net/shared/info/1339779080)
+
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md) for a list of changes.

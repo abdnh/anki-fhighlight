@@ -1,3 +1,32 @@
+<p>This add-on mainly adds syntax highlighting for code via a custom filter which you put in your <a href="https://docs.ankiweb.net/templates/intro.html">card templates</a>.</p>
+<p>This uses the <a href="https://pygments.org/">Pygments</a> library like <a href="https://github.com/glutanimate/">glutanimate</a>'s <i><a href="https://ankiweb.net/shared/info/1463041493">Syntax Highlighting for Code</a></i> add-on. The main difference is that this add-on highlights code dynamically when it's shown in the reviewing screen,
+and doesn't modify the notes themselves. This has the disadvantage that syntax highlighting will not work without the add-on (i.e. it won't work on mobile platforms), but might make it easier to dynamically modify some highlighting parameters.</p>
+
+<b>How to use</b>
+
+<p>Put the add-on's filter in your card template like this:</p>
+<code>{{highlight lang=python:Front}}
+</code>
+<p>The <code>lang</code> option specifies the programming language. See <a href="https://pygments.org/docs/lexers/">Pygments documentation</a> for a list of all supported languages.
+You can alternatively omit the option to make the add-on try to guess the language from the field text using Pygments' <a href="https://pygments.org/docs/api/#pygments.lexers.guess_lexer">guess_lexer</a> function.</p>
+<p>You can also dynamically specify the language for each note by prefixing the value of the lang option with <code>#</code>:</p>
+<code>{{highlight lang=#lang_field:Front}}
+</code>
+<p>Here the value of the option (<code>lang_field</code>) is interpreted as a field name where the language identifier is stored in your notes.</p>
+<p>You can also use the following filter to list all supported languages:</p>
+<code>{{highlight-list-lexers:}}
+</code>
+<p>There is also a more flexible option for highlighting code snippets in fields without having to modify your templates.
+Enclose code snippets in the triple backticks like this:</p>
+
+\`\`\`python
+
+print('hello world!')
+
+\`\`\`
+
+<p>You can also omit the language here.</p>
+
 <b>Changelog</b>
 
 See <a href="https://github.com/abdnh/anki-fhighlight/blob/master/CHANGELOG.md">CHANGELOG.md</a> for a list of changes.
