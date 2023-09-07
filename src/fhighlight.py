@@ -31,7 +31,7 @@ def preprocess_field_text(field_text: str) -> str:
 
 
 def highlight_text(text: str, lexer: Lexer) -> str:
-    return "<center>" + highlight(text, lexer, formatter) + "</center><br>"
+    return highlight(text, lexer, formatter)
 
 
 def fhighlight_get_lexer(lang: str, text: str) -> Lexer:
