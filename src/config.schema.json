@@ -1,6 +1,12 @@
 {
     "properties": {
-        "foo": {
+        "def_lang": {
+            "type": "string"
+        },
+        "formatter_options": {
+            "type": "object"
+        },
+        "shortcut": {
             "type": "string"
         }
     },
