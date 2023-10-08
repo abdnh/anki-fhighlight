@@ -1,7 +1,5 @@
 {
     "def_lang": "python",
     "shortcut": "Alt+s",
-    "formatter_options": {
-        "linenos": true
-    }
+    "formatter_options": {}
 }
