@@ -10,7 +10,9 @@ from pygments.formatters.html import HtmlFormatter
 from pygments.lexer import Lexer
 from pygments.lexers import get_all_lexers, get_lexer_by_name, guess_lexer
 
-formatter = HtmlFormatter(noclasses=True, linenos=True)
+from .config import config
+
+formatter = HtmlFormatter(noclasses=True, **config["formatter_options"])
 
 cloze_re = re.compile("<span class=cloze>(.*)</span>")
 html_re = re.compile("(<.*?>)")

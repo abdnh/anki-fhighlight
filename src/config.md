@@ -1,2 +1,3 @@
 -   `def_lang`: Default language to select in language chooser.
 -   `shortcut`: Editor shortcut.
+-   `formatter_options`: Options to pass to [Pygments's HtmlFormatter](https://pygments.org/docs/formatters/#HtmlFormatter).
