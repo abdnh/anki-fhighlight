@@ -1,4 +1,5 @@
 import os
+import sys
 from typing import TYPE_CHECKING, List
 
 from anki import hooks
@@ -11,6 +12,8 @@ from aqt import gui_hooks
 from aqt.editor import Editor
 from aqt.qt import *
 from aqt.utils import showWarning
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "vendor"))
 
 from .config import config
 from .consts import consts
@@ -88,7 +91,6 @@ def add_editor_button(buttons: List[str], editor: Editor) -> None:
     buttons.append(button)
 
 
-def init_hooks() -> None:
-    hooks.field_filter.append(on_highlight_filter)
-    gui_hooks.card_will_show.append(on_card_will_show)
-    gui_hooks.editor_did_init_buttons.append(add_editor_button)
+hooks.field_filter.append(on_highlight_filter)
+gui_hooks.card_will_show.append(on_card_will_show)
+gui_hooks.editor_did_init_buttons.append(add_editor_button)
